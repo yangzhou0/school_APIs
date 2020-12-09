@@ -8,6 +8,7 @@ class Student(models.Model):
     age = models.IntegerField()
 
 class Course(models.Model):
+    course_name = models.CharField(max_length=250)
     enrolled_students = models.ManyToManyField(
         Student, through='Enrollment', related_name='enrolled_courses')
 
