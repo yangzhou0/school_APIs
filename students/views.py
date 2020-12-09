@@ -1,9 +1,9 @@
 # added some comments
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import StudentForm
-from .models import Student
-from .serializers import StudentSerializer
+from .forms import StudentForm,CourseForm
+from .models import Student,Course
+from .serializers import StudentSerializer, CourseSerializer
 import json
 
 def all_students(request):
@@ -45,3 +45,24 @@ def delete_student(request, student_id):
         student = Student.objects.get(id=student_id)
         student.delete()
     return JsonResponse(data={'status': 'Successfully deleted student.'}, status=200)
+
+
+    def all_courses(request):
+        courses = Course.objects.all()
+        serialized_courses = courseserializer(courses).all_courses
+        return JsonResponse(data=serialized_courses, status=200)
+
+    def course_detail(request,course_id):
+        pass
+
+    def update_course(request,course_id):
+        pass
+    def delete_course(request,course_id):
+        pass
+
+    def enroll_course(request,course_id,student_id):
+        pass
+
+    def drop_course(request,course_id,student_id):
+        pass
+
