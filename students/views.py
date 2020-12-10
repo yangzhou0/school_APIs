@@ -44,7 +44,7 @@ def delete_student(request, student_id):
     if request.method == "POST":
         student = Student.objects.get(id=student_id)
         student.delete()
-    return JsonResponse(data={'status': 'Successfully deleted student.'}, status=200)
+    return JsonResponse(data={'status': f'Successfully deleted {student.first_name}.'}, status=200)
 
 
 def all_courses(request):
@@ -73,7 +73,7 @@ def delete_course(request,course_id):
     if request.method == "POST":
         course = Course.objects.get(id=course_id)
         course.delete()
-    return JsonResponse(data={'status': 'Successfully deleted course.'}, status=200)
+    return JsonResponse(data={f"successfully added {course.course_name}"}, status=200)
 
 @csrf_exempt
 def enroll_course(request,course_id,student_id):
@@ -82,10 +82,9 @@ def enroll_course(request,course_id,student_id):
         print('course enrolled students before enrollment ',course.enrolled_students.all())
         student = Student.objects.get(id=student_id)
         course.enrolled_students.add(student)
-        # student.enrolled_courses.add(course)
-        # course.save()
         print('course enrolled students after enrollment ',Course.objects.get(pk=course.pk).enrolled_students.all())
         print('course enrolled for this students ',student.enrolled_courses.all())
+        return JsonResponse(data={'status': f"Successfully enrolled {student.first_name} {student.last_name} to {course.course_name}"}, status=200)
 
     
 
