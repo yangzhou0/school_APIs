@@ -5,7 +5,8 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ('first_name', 'last_name','age')
+
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = ('course_name')
+        fields = ('course_name','enrolled_students')
