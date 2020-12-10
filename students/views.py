@@ -82,7 +82,7 @@ def enroll_course(request,course_id,student_id):
         print('course enrolled students before enrollment ',course.enrolled_students.all())
         student = Student.objects.get(id=student_id)
         course.enrolled_students.add(student)
-        print('course enrolled students after enrollment ',Course.objects.get(pk=course.pk).enrolled_students.all())
+        print('course enrolled students after enrollment ',course.enrolled_students.all())
         print('course enrolled for this students ',student.enrolled_courses.all())
         return JsonResponse(data={'status': f"Successfully enrolled {student.first_name} {student.last_name} to {course.course_name}"}, status=200)
 
@@ -90,7 +90,11 @@ def enroll_course(request,course_id,student_id):
 
 @csrf_exempt
 def drop_course(request,course_id,student_id):
-    pass
+    if request.method == 'POST':
+        course = Course.objects.get(id=course_id)
+        student = Student.objects.get(id=student_id)
+        course.enrolled_students.remove(student)
+        return JsonResponse(data={'status': f"Successfully removed {student.first_name} {student.last_name} from {course.course_name}"}, status=200)
 
 @csrf_exempt
 def new_course(request):
